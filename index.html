@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="calculator">
+            <div class="header">
+                <div class="logo">
+                    <i class="fas fa-calculator"></i>
+                    <h1>Calculator</h1>
+                </div>
+                <div class="theme-toggle">
+                    <button id="themeToggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="history-panel" id="historyPanel">
+                <div class="history-header">
+                    <h3>History</h3>
+                    <button class="clear-history" onclick="clearHistory()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="history-list" id="historyList"></div>
+            </div>
+            
+            <div class="display-section">
+                <div class="expression-display" id="expressionDisplay"></div>
+                <input type="text" id="display" class="display" disabled placeholder="0">
+            </div>
+            
+            <div class="buttons">
+                <button class="btn function" onclick="clearAll()" title="Clear All (Escape)">
+                    <i class="fas fa-undo"></i>
+                </button>
+                <button class="btn function" onclick="clearDisplay()" title="Clear (C)">
+                    <i class="fas fa-backspace"></i>
+                </button>
+                <button class="btn function" onclick="toggleHistory()" title="History (H)">
+                    <i class="fas fa-history"></i>
+                </button>
+                <button class="btn operator" onclick="appendToDisplay('/')" title="Divide">
+                    <i class="fas fa-divide"></i>
+                </button>
+                
+                <button class="btn" onclick="appendToDisplay('7')">7</button>
+                <button class="btn" onclick="appendToDisplay('8')">8</button>
+                <button class="btn" onclick="appendToDisplay('9')">9</button>
+                <button class="btn operator" onclick="appendToDisplay('*')" title="Multiply">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <button class="btn" onclick="appendToDisplay('4')">4</button>
+                <button class="btn" onclick="appendToDisplay('5')">5</button>
+                <button class="btn" onclick="appendToDisplay('6')">6</button>
+                <button class="btn operator" onclick="appendToDisplay('-')" title="Subtract">
+                    <i class="fas fa-minus"></i>
+                </button>
+                
+                <button class="btn" onclick="appendToDisplay('1')">1</button>
+                <button class="btn" onclick="appendToDisplay('2')">2</button>
+                <button class="btn" onclick="appendToDisplay('3')">3</button>
+                <button class="btn operator" onclick="appendToDisplay('+')" title="Add">
+                    <i class="fas fa-plus"></i>
+                </button>
+                
+                <button class="btn" onclick="appendToDisplay('0')">0</button>
+                <button class="btn" onclick="appendToDisplay('.')">.</button>
+                <button class="btn function" onclick="calculatePercentage()" title="Percentage (%)">
+                    <i class="fas fa-percent"></i>
+                </button>
+                <button class="btn equal" onclick="calculateResult()" title="Calculate (=)">
+                    <i class="fas fa-equals"></i>
+                </button>
+            </div>
+            
+            <div class="keyboard-hint">
+                <p>💡 <strong>Keyboard:</strong> Numbers (0-9), +, -, *, /, Enter, Escape, C, H, %</p>
+                <button onclick="testKeyboard()" style="margin-top: 8px; padding: 6px 12px; background: var(--button-bg); border: var(--glass-border); border-radius: 6px; color: var(--text-color); cursor: pointer; font-size: 10px;">Test Keyboard</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

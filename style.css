@@ -1,0 +1,495 @@
+:root {
+    --primary-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --calculator-bg: rgba(255, 255, 255, 0.1);
+    --display-bg: rgba(255, 255, 255, 0.15);
+    --button-bg: rgba(255, 255, 255, 0.2);
+    --button-hover: rgba(255, 255, 255, 0.3);
+    --operator-bg: rgba(255, 193, 7, 0.8);
+    --operator-hover: rgba(255, 193, 7, 1);
+    --function-bg: rgba(108, 117, 125, 0.8);
+    --function-hover: rgba(108, 117, 125, 1);
+    --equal-bg: rgba(40, 167, 69, 0.8);
+    --equal-hover: rgba(40, 167, 69, 1);
+    --text-color: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --border-color: rgba(255, 255, 255, 0.2);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] {
+    --primary-bg: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --calculator-bg: rgba(255, 255, 255, 0.9);
+    --display-bg: rgba(0, 0, 0, 0.05);
+    --button-bg: rgba(0, 0, 0, 0.1);
+    --button-hover: rgba(0, 0, 0, 0.2);
+    --operator-bg: rgba(255, 193, 7, 0.9);
+    --operator-hover: rgba(255, 193, 7, 1);
+    --function-bg: rgba(108, 117, 125, 0.9);
+    --function-hover: rgba(108, 117, 125, 1);
+    --equal-bg: rgba(40, 167, 69, 0.9);
+    --equal-hover: rgba(40, 167, 69, 1);
+    --text-color: #333333;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --glass-border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--primary-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+.calculator-container {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px;
+}
+
+.calculator {
+    background: var(--calculator-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: var(--glass-border);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.calculator:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: var(--glass-border);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo i {
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.logo h1 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.theme-toggle {
+    cursor: pointer;
+}
+
+.theme-toggle button {
+    background: var(--button-bg);
+    border: var(--glass-border);
+    border-radius: 10px;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+}
+
+.theme-toggle button:hover {
+    background: var(--button-hover);
+    transform: scale(1.05);
+}
+
+.theme-toggle button:active {
+    transform: scale(0.95);
+}
+
+.theme-toggle i {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.history-panel {
+    background: var(--display-bg);
+    border-radius: 12px;
+    border: var(--glass-border);
+    margin-bottom: 12px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+.history-panel.show {
+    display: block;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: var(--glass-border);
+}
+
+.history-header h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.clear-history {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.clear-history:hover {
+    color: var(--text-color);
+    background: var(--button-bg);
+}
+
+.history-list {
+    padding: 6px 12px;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.history-item {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+}
+
+.history-item:hover {
+    background: var(--button-bg);
+    border-radius: 6px;
+    padding-left: 6px;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.display-section {
+    margin-bottom: 16px;
+}
+
+.expression-display {
+    min-height: 18px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: right;
+    margin-bottom: 6px;
+    padding: 0 4px;
+    font-weight: 400;
+}
+
+.display {
+    width: 100%;
+    height: 50px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: right;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: var(--display-bg);
+    color: var(--text-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+.display:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.display::placeholder {
+    color: var(--text-secondary);
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.btn {
+    height: 45px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 12px;
+    background: var(--button-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: var(--glass-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.operator {
+    background: var(--operator-bg);
+    color: #000;
+    font-weight: 600;
+}
+
+.operator:hover {
+    background: var(--operator-hover);
+}
+
+.function {
+    background: var(--function-bg);
+    font-size: 0.9rem;
+}
+
+.function:hover {
+    background: var(--function-hover);
+}
+
+.equal {
+    background: var(--equal-bg);
+    grid-column: span 2;
+    font-weight: 600;
+}
+
+.equal:hover {
+    background: var(--equal-hover);
+}
+
+.keyboard-hint {
+    margin-top: 12px;
+    text-align: center;
+    padding: 8px;
+    background: var(--display-bg);
+    border-radius: 10px;
+    border: var(--glass-border);
+}
+
+.keyboard-hint p {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+.keyboard-hint button {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: var(--button-bg);
+    border: var(--glass-border);
+    border-radius: 6px;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 10px;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+    
+    .calculator-container {
+        padding: 5px;
+        max-width: 100%;
+    }
+    
+    .calculator {
+        padding: 12px;
+        border-radius: 16px;
+    }
+    
+    .btn {
+        height: 40px;
+        font-size: 0.9rem;
+        border-radius: 10px;
+    }
+    
+    .display {
+        height: 45px;
+        font-size: 1.2rem;
+        border-radius: 10px;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+    }
+    
+    .logo i {
+        font-size: 16px;
+    }
+    
+    .theme-toggle button {
+        min-width: 28px;
+        min-height: 28px;
+    }
+    
+    .theme-toggle i {
+        font-size: 12px;
+    }
+    
+    .buttons {
+        gap: 6px;
+    }
+    
+    .keyboard-hint {
+        padding: 6px;
+        margin-top: 8px;
+    }
+    
+    .keyboard-hint p {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 360px) {
+    .calculator {
+        padding: 10px;
+    }
+    
+    .btn {
+        height: 35px;
+        font-size: 0.85rem;
+    }
+    
+    .display {
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .logo h1 {
+        font-size: 0.9rem;
+    }
+    
+    .buttons {
+        gap: 5px;
+    }
+}
+
+/* Scrollbar Styling */
+.history-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.history-list::-webkit-scrollbar-track {
+    background: var(--display-bg);
+    border-radius: 2px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: var(--button-bg);
+    border-radius: 2px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+    background: var(--button-hover);
+}
+
+/* Focus states for accessibility */
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Loading animation for calculations */
+.calculating {
+    animation: pulse 1s infinite;
+} 
